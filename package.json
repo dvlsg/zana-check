@@ -11,6 +11,10 @@
     "checking",
     "classes"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dvlsg/zana-check.git"
+  },
   "author": "Dave Lesage",
   "license": "MIT",
   "devDependencies": {
