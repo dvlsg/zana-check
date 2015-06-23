@@ -21,14 +21,17 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.empty = empty;
 exports.exists = exists;
+exports.instance = instance;
 exports.is = is;
 exports.isArray = isArray;
 exports.isBoolean = isBoolean;
 exports.isDate = isDate;
 exports.isFunction = isFunction;
 exports.isIterable = isIterable;
+exports.isMap = isMap;
 exports.isNumber = isNumber;
 exports.isObject = isObject;
+exports.isSet = isSet;
 exports.isString = isString;
 exports.isRegExp = isRegExp;
 exports.isType = isType;
@@ -74,6 +77,19 @@ function empty(value) {
 
 function exists(value) {
     return value != null;
+}
+
+/**
+    Checks that the first argument is an instance of the second argument.
+    A first class function for making us of the instanceof operator.
+
+    @param {any} arg1 The first argument for the instanceof operator.
+    @param {any} arg2 The second argument for the instanceof operator.
+    @returns {boolean} True, if arg1 is an instance of arg2.
+*/
+
+function instance(arg1, arg2) {
+    return arg1 instanceof arg2;
 }
 
 /**
@@ -159,6 +175,17 @@ function isIterable(value) {
 }
 
 /**
+    Checks that the provided value is a map type.
+
+    @param {any} value The value on which to check.
+    @returns {boolean} True if the check passes, false if not.
+*/
+
+function isMap(value) {
+    return getType(value) === types.map;
+}
+
+/**
     Checks that the provided value is a number type.
 
     @param {any} value The value on which to check.
@@ -178,6 +205,17 @@ function isNumber(value) {
 
 function isObject(value) {
     return getType(value) === types.object;
+}
+
+/**
+    Checks that the provided value is a set type.
+
+    @param {any} value The value on which to check.
+    @returns {boolean} True if the check passes, false if not.
+*/
+
+function isSet(value) {
+    return getType(value) === types.set;
 }
 
 /**
@@ -217,6 +255,7 @@ function isType(value, type) {
 exports["default"] = {
     empty: empty,
     exists: exists,
+    instance: instance,
     is: is,
     isArray: isArray,
     isBoolean: isBoolean,

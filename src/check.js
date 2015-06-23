@@ -49,6 +49,18 @@ export function exists(value) {
 }
 
 /**
+    Checks that the first argument is an instance of the second argument.
+    A first class function for making us of the instanceof operator.
+
+    @param {any} arg1 The first argument for the instanceof operator.
+    @param {any} arg2 The second argument for the instanceof operator.
+    @returns {boolean} True, if arg1 is an instance of arg2.
+*/
+export function instance(arg1, arg2) {
+    return arg1 instanceof arg2;
+}
+
+/**
     Checks that the provided two values are of the same type,
     either by using their prototypes or the values themselves.
 
@@ -125,6 +137,16 @@ export function isIterable(value) {
 }
 
 /**
+    Checks that the provided value is a map type.
+
+    @param {any} value The value on which to check.
+    @returns {boolean} True if the check passes, false if not.
+*/
+export function isMap(value) {
+    return getType(value) === types.map;
+}
+
+/**
     Checks that the provided value is a number type.
 
     @param {any} value The value on which to check.
@@ -142,6 +164,16 @@ export function isNumber(value) {
 */
 export function isObject(value) {
     return getType(value) === types.object;
+}
+
+/**
+    Checks that the provided value is a set type.
+
+    @param {any} value The value on which to check.
+    @returns {boolean} True if the check passes, false if not.
+*/
+export function isSet(value) {
+    return getType(value) === types.set;
 }
 
 /**
@@ -178,6 +210,7 @@ export function isType(value, type) {
 export default {
     empty,
     exists,
+    instance,
     is,
     isArray,
     isBoolean,
