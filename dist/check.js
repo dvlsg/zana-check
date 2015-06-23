@@ -262,10 +262,12 @@ exports["default"] = {
     isDate: isDate,
     isFunction: isFunction,
     isIterable: isIterable,
+    isMap: isMap,
     isNumber: isNumber,
     isObject: isObject,
     isRegex: isRegExp,
     isRegExp: isRegExp,
+    isSet: isSet,
     isString: isString,
     isType: isType
 };

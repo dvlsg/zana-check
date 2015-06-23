@@ -217,10 +217,12 @@ export default {
     isDate,
     isFunction,
     isIterable,
+    isMap,
     isNumber,
     isObject,
     isRegex: isRegExp,
     isRegExp,
+    isSet,
     isString,
     isType
 };
