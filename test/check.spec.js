@@ -196,7 +196,70 @@ describe('Check', () => {
         it('should fail for null', () => {
             assert.equal(false, check.exists(undefined));
         });
-        
+
+    });
+
+    describe('instance', () => {
+
+        it('should pass for booleans from constructor', () => {
+            assert.ok(check.instance(new Boolean(), Boolean));
+        });
+
+        it('should fail for literal booleans', () => {
+            assert.equal(false, check.instance(true, Boolean));
+            assert.equal(false, check.instance(false, Boolean));
+        });
+
+        it('should pass for classes', () => {
+            class A {};
+            class B extends A {};
+            assert.ok(check.instance(new A(), A));
+            assert.ok(check.instance(new B(), B));
+            assert.ok(check.instance(new B(), A));
+        });
+
+        it('should pass for dates', () => {
+            assert.ok(check.instance(new Date(), Date));
+        });
+
+        it('should pass for maps', () => {
+            assert.ok(check.instance(new Map(), Map));
+        });
+
+        it('should pass for numbers from constructor', () => {
+            assert.ok(check.instance(new Number(1), Number));
+            assert.ok(check.instance(new Number(), Number));
+        });
+
+        it('should fail for literal numbers', () => {
+            assert.equal(false, check.instance(0, Number));
+            assert.equal(false, check.instance(-0, Number));
+            assert.equal(false, check.instance(-0, Number));
+            assert.equal(false, check.instance(NaN, Number));
+            assert.equal(false, check.instance(Infinity, Number));
+            assert.equal(false, check.instance(-Infinity, Number));
+        });
+
+        it('should pass for objects', () => {
+            assert.ok(check.instance({}, Object));
+        });
+
+        it('should pass for regular expressions', () => {
+            assert.ok(check.instance(/.*/, RegExp));
+        });
+
+        it('should pass for sets', () => {
+            assert.ok(check.instance(new Set(), Set));
+        });
+
+        it('should pass for strings from constructor', () => {
+            assert.ok(check.instance(new String('stuff'), String));
+            assert.ok(check.instance(new String(), String));
+        });
+
+        it('should fail for literal strings', () => {
+            assert.equal(false, check.instance('string', String));
+        });
     });
 
     describe('is', () => {
@@ -557,6 +620,30 @@ describe('Check', () => {
 
     });
 
+    describe('isMap', () => {
+
+        it('should pass for maps', () => {
+            assert.ok(check.isMap(new Map()));
+            assert.ok(check.isMap(Map.prototype));
+        });
+
+        it('should fail for non sets', () => {
+            class A { get [Symbol.toStringTag]() { return 'A'; }};
+            assert.equal(false, check.isMap(true));
+            assert.equal(false, check.isMap(''));
+            assert.equal(false, check.isMap(0));
+            assert.equal(false, check.isMap([]));
+            assert.equal(false, check.isMap({}));
+            assert.equal(false, check.isMap(() => {}));
+            assert.equal(false, check.isMap(new Set()));
+            assert.equal(false, check.isMap(new RegExp()));
+            assert.equal(false, check.isMap(new Date()));
+            assert.equal(false, check.isMap(new Error()));
+            assert.equal(false, check.isMap(new A()));
+            assert.equal(false, check.isMap(Symbol()));
+        });
+    });
+
     describe('isNumber', () => {
 
         it('should pass for numbers', () => {
@@ -650,6 +737,30 @@ describe('Check', () => {
 
     });
 
+    describe('isSet', () => {
+
+        it('should pass for sets', () => {
+            assert.ok(check.isSet(new Set()));
+            assert.ok(check.isSet(Set.prototype));
+        });
+
+        it('should fail for non sets', () => {
+            class A { get [Symbol.toStringTag]() { return 'A'; }};
+            assert.equal(false, check.isSet(true));
+            assert.equal(false, check.isSet(''));
+            assert.equal(false, check.isSet(0));
+            assert.equal(false, check.isSet([]));
+            assert.equal(false, check.isSet({}));
+            assert.equal(false, check.isSet(() => {}));
+            assert.equal(false, check.isSet(new Map()));
+            assert.equal(false, check.isSet(new RegExp()));
+            assert.equal(false, check.isSet(new Date()));
+            assert.equal(false, check.isSet(new Error()));
+            assert.equal(false, check.isSet(new A()));
+            assert.equal(false, check.isSet(Symbol()));
+        });
+    });
+
     describe('isString', () => {
 
         it('should pass for strings', () => {
@@ -661,7 +772,7 @@ describe('Check', () => {
 
         it('should fail for non strings', () => {
             class A { get [Symbol.toStringTag]() { return 'A'; }};
-            assert.equal(false, check.isArray(true));
+            assert.equal(false, check.isString(true));
             assert.equal(false, check.isString(0));
             assert.equal(false, check.isString([]));
             assert.equal(false, check.isString({}));
@@ -675,4 +786,5 @@ describe('Check', () => {
             assert.equal(false, check.isString(Symbol()));
         });
     });
+
 });
