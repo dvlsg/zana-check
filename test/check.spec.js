@@ -307,7 +307,7 @@ describe('Check', () => {
         it('should pass for two dates', () => {
             assert.ok(check.is(new Date(), new Date()));
             // note that `Date()` without `new` actually returns a string
-            assert.ok(check.is(Date(), String)); // javascript oddity?
+            assert.ok(check.is(Date(), String));
             assert.ok(check.is(new Date(), Date));
         });
         
@@ -442,7 +442,7 @@ describe('Check', () => {
             assert.equal(false, check.is(new Date(), Symbol()));
         });
 
-        it('should fail for a error and any other type', () => {
+        it('should fail for an error and any other type', () => {
             class A { get [Symbol.toStringTag]() { return 'A'; }};
             assert.equal(false, check.is(new Error(), 0));
             assert.equal(false, check.is(new Error(), ''));
@@ -470,7 +470,7 @@ describe('Check', () => {
             assert.equal(false, check.is(new A(), Symbol()));
         });
 
-        it('should fail for a symbols and any other type', () => {
+        it('should fail for symbols and any other type', () => {
             class A { get [Symbol.toStringTag]() { return 'A'; }};
             assert.equal(false, check.is(Symbol(), 0));
             assert.equal(false, check.is(Symbol(), ''));
