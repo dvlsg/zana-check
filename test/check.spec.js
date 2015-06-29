@@ -130,7 +130,7 @@ describe('Check', () => {
 
     });
 
-    describe('exists', () => {
+    describe('exists()', () => {
 
         it('should pass for any string', () => {
             assert.ok(check.exists('string'));
@@ -199,7 +199,7 @@ describe('Check', () => {
 
     });
 
-    describe('instance', () => {
+    describe('instance()', () => {
 
         it('should pass for booleans from constructor', () => {
             assert.ok(check.instance(new Boolean(), Boolean));
@@ -262,7 +262,7 @@ describe('Check', () => {
         });
     });
 
-    describe('is', () => {
+    describe('is()', () => {
 
         it('should pass for two strings', () => {
             assert.ok(check.is('', ''));
@@ -490,7 +490,7 @@ describe('Check', () => {
 
     });
 
-    describe('isArray', () => {
+    describe('isArray()', () => {
 
         it('should pass for arrays', () => {
             assert.ok(check.isArray([]));
@@ -517,7 +517,7 @@ describe('Check', () => {
 
     });
 
-    describe('isBoolean', () => {
+    describe('isBoolean()', () => {
 
         it('should pass for booleans', () => {
             assert.ok(check.isBoolean(true));
@@ -542,7 +542,7 @@ describe('Check', () => {
 
     });
 
-    describe('isDate', () => {
+    describe('isDate()', () => {
         
         it('should pass for dates', () => {
             assert.ok(check.isDate(new Date()));
@@ -622,7 +622,7 @@ describe('Check', () => {
 
     });
 
-    describe('isIterable', () => {
+    describe('isIterable()', () => {
 
         it('should pass for anything with Symbol.iterator', () => {
             assert.ok(check.isIterable([]));
@@ -652,7 +652,7 @@ describe('Check', () => {
 
     });
 
-    describe('isMap', () => {
+    describe('isMap()', () => {
 
         it('should pass for maps', () => {
             assert.ok(check.isMap(new Map()));
@@ -676,7 +676,7 @@ describe('Check', () => {
         });
     });
 
-    describe('isNumber', () => {
+    describe('isNumber()', () => {
 
         it('should pass for numbers', () => {
             assert.ok(check.isNumber(0));
@@ -708,7 +708,7 @@ describe('Check', () => {
 
     });
 
-    describe('isObject', () => {
+    describe('isObject()', () => {
 
         it('should pass for objects', () => {
             assert.ok(check.isObject({}));
@@ -734,7 +734,7 @@ describe('Check', () => {
 
     });
 
-    describe('isRegExp', () => {
+    describe('isRegExp()', () => {
 
         it('should pass for regular expressions', () => {
             assert.ok(check.isRegExp(/.*/));
@@ -761,7 +761,7 @@ describe('Check', () => {
 
     });
 
-    describe('isRegex', () => {
+    describe('isRegex()', () => {
 
         it('should be a reference to isRegExp', () => {
             assert.strictEqual(check.isRegex, check.isRegExp);
@@ -769,7 +769,7 @@ describe('Check', () => {
 
     });
 
-    describe('isSet', () => {
+    describe('isSet()', () => {
 
         it('should pass for sets', () => {
             assert.ok(check.isSet(new Set()));
@@ -793,7 +793,7 @@ describe('Check', () => {
         });
     });
 
-    describe('isString', () => {
+    describe('isString()', () => {
 
         it('should pass for strings', () => {
             assert.ok(check.isString(''));
@@ -817,6 +817,7 @@ describe('Check', () => {
             assert.equal(false, check.isString(new A()));
             assert.equal(false, check.isString(Symbol()));
         });
+        
     });
 
 });
