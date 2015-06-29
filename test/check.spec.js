@@ -318,6 +318,10 @@ describe('Check', () => {
             assert.ok(check.is(/.*/, RegExp));
         });
 
+        it('should pass for two functions', () => {
+            assert.ok(check.is(() => {}, Function));
+        });
+
         it('should pass for errors', () => {
             assert.ok(check.is(new Error(), new Error()));
             assert.ok(check.is(new Error(), Error()));
@@ -563,7 +567,35 @@ describe('Check', () => {
         
     });
 
-    describe('isFunction', () => {
+    describe('isError()', () => {
+        
+        it('should pass for errors', () => {
+            class ExtendedError extends Error {};
+            assert.ok(check.isError(new Error()));
+            assert.ok(check.isError(Error.prototype));
+            assert.ok(check.isError(new ExtendedError()));
+            assert.ok(check.isError(ExtendedError.prototype));
+        });
+
+        it('should fail for non errors', () => {
+            class A { get [Symbol.toStringTag]() { return 'A'; }};
+            assert.equal(false, check.isError(true));
+            assert.equal(false, check.isError(0));
+            assert.equal(false, check.isError(''));
+            assert.equal(false, check.isError([]));
+            assert.equal(false, check.isError({}));
+            assert.equal(false, check.isError(() => {}));
+            assert.equal(false, check.isError(new Set()));
+            assert.equal(false, check.isError(new Map()));
+            assert.equal(false, check.isError(new RegExp()));
+            assert.equal(false, check.isError(new Date()));
+            assert.equal(false, check.isError(new A()));
+            assert.equal(false, check.isError(Symbol()));
+        });
+        
+    });
+
+    describe('isFunction()', () => {
         it('should pass for functions', () => {
             assert.ok(check.isFunction(() => {}));
             assert.ok(check.isFunction(new Function()));
