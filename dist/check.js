@@ -26,6 +26,7 @@ exports.is = is;
 exports.isArray = isArray;
 exports.isBoolean = isBoolean;
 exports.isDate = isDate;
+exports.isError = isError;
 exports.isFunction = isFunction;
 exports.isIterable = isIterable;
 exports.isMap = isMap;
@@ -141,6 +142,18 @@ function isBoolean(value) {
 
 function isDate(value) {
     return getType(value) === types.date;
+}
+
+/**
+    Checks that the provided value is an error type,
+    either of the base Error or an extended Error.
+
+    @param {any} value The value on which to check.
+    @returns {boolean} True if the check passes, false if not.
+*/
+
+function isError(value) {
+    return getType(value) === types.error || value instanceof Error;
 }
 
 /**
@@ -262,6 +275,7 @@ exports["default"] = {
     isArray: isArray,
     isBoolean: isBoolean,
     isDate: isDate,
+    isError: isError,
     isFunction: isFunction,
     isIterable: isIterable,
     isMap: isMap,

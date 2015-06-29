@@ -108,6 +108,17 @@ export function isDate(value) {
 }
 
 /**
+    Checks that the provided value is an error type,
+    either of the base Error or an extended Error.
+
+    @param {any} value The value on which to check.
+    @returns {boolean} True if the check passes, false if not.
+*/
+export function isError(value) {
+    return getType(value) === types.error || value instanceof Error;
+}
+
+/**
     Checks that the provided value is a function type.
 
     @param {any} value The value on which to check.
@@ -217,6 +228,7 @@ export default {
     isArray,
     isBoolean,
     isDate,
+    isError,
     isFunction,
     isIterable,
     isMap,
