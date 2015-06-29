@@ -102,7 +102,9 @@ function instance(arg1, arg2) {
 */
 
 function is(val1, val2) {
-    var pro1 = val1 && val1.prototype ? val1.prototype : val1;
+    // note that getType of (new Function()).prototype is [object Object].
+    // do we actually want to do this, or suggest using instance Function, not is Function?
+    var pro1 = val1 && val1.prototype && !val1 instanceof Function ? val1.prototype : val1;
     var pro2 = val2 && val2.prototype ? val2.prototype : val2;
     return getType(pro1) === getType(pro2);
 }
