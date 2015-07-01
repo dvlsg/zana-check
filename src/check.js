@@ -9,8 +9,7 @@
 
 "use strict";
 
-import util from 'zana-util';
-let { getType, types } = util;
+import { getType, types } from 'zana-util';
 
 /**
     Checks that the provided value is considered to be empty.
@@ -84,7 +83,7 @@ export function is(val1, val2) {
 */
 export function isArray(value) {
     // consider using Array.is()
-    return isType(value, types.array);
+    return getType(value) === types.array;
 }
 
 /**
@@ -216,9 +215,12 @@ export function isRegExp(value) {
     @param {string} type The name of the type for which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isType(value, type) {
-    return getType(value) === type;
+export function isType(value, T) {
+    return getType(value) === T;
 }
+
+export var isRegex = isRegExp;
+export var type = isType;
 
 export default {
     empty,
@@ -238,5 +240,6 @@ export default {
     isRegExp,
     isSet,
     isString,
-    isType
+    isType,
+    type: isType
 };

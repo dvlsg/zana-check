@@ -9,16 +9,11 @@
 
 "use strict";
 
-var _Object$defineProperty = require("babel-runtime/core-js/object/define-property")["default"];
-
 var _Symbol$iterator = require("babel-runtime/core-js/symbol/iterator")["default"];
 
-var _interopRequireDefault = require("babel-runtime/helpers/interop-require-default")["default"];
-
-_Object$defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
 exports.empty = empty;
 exports.exists = exists;
 exports.instance = instance;
@@ -39,11 +34,6 @@ exports.isType = isType;
 
 var _zanaUtil = require("zana-util");
 
-var _zanaUtil2 = _interopRequireDefault(_zanaUtil);
-
-var getType = _zanaUtil2["default"].getType;
-var types = _zanaUtil2["default"].types;
-
 /**
     Checks that the provided value is considered to be empty.
 
@@ -55,14 +45,14 @@ function empty(value) {
     if (!value) return true;
     if (exists(value.length) && value.length === 0) // covers strings, arrays, etc
         return true;
-    switch (getType(value)) {
-        case types.object:
+    switch ((0, _zanaUtil.getType)(value)) {
+        case _zanaUtil.types.object:
             for (var prop in value) {
                 if (value.hasOwnProperty(prop)) return false;
             }
             return true;
-        case types.set:
-        case types.map:
+        case _zanaUtil.types.set:
+        case _zanaUtil.types.map:
             return value.size === 0;
     }
     // anything else to cover?
@@ -107,7 +97,7 @@ function is(val1, val2) {
     // do we actually want to do this, or suggest using instance Function, not is Function?
     var pro1 = val1 && val1.prototype && !val1 instanceof Function ? val1.prototype : val1;
     var pro2 = val2 && val2.prototype ? val2.prototype : val2;
-    return getType(pro1) === getType(pro2);
+    return (0, _zanaUtil.getType)(pro1) === (0, _zanaUtil.getType)(pro2);
 }
 
 /**
@@ -119,7 +109,7 @@ function is(val1, val2) {
 
 function isArray(value) {
     // consider using Array.is()
-    return isType(value, types.array);
+    return (0, _zanaUtil.getType)(value) === _zanaUtil.types.array;
 }
 
 /**
@@ -130,7 +120,7 @@ function isArray(value) {
 */
 
 function isBoolean(value) {
-    return getType(value) === types.boolean;
+    return (0, _zanaUtil.getType)(value) === _zanaUtil.types.boolean;
 }
 
 /**
@@ -141,7 +131,7 @@ function isBoolean(value) {
 */
 
 function isDate(value) {
-    return getType(value) === types.date;
+    return (0, _zanaUtil.getType)(value) === _zanaUtil.types.date;
 }
 
 /**
@@ -153,7 +143,7 @@ function isDate(value) {
 */
 
 function isError(value) {
-    return getType(value) === types.error || value instanceof Error;
+    return (0, _zanaUtil.getType)(value) === _zanaUtil.types.error || value instanceof Error;
 }
 
 /**
@@ -164,7 +154,7 @@ function isError(value) {
 */
 
 function isFunction(value) {
-    return getType(value) === types["function"];
+    return (0, _zanaUtil.getType)(value) === _zanaUtil.types["function"];
 }
 
 /**
@@ -186,7 +176,7 @@ export function isGeneratorFunction(value) {
 
 function isIterable(value) {
     // tbd if this is sufficient. check with both fns and generator fns
-    return exists(value) && getType(value[_Symbol$iterator]) === types["function"];
+    return exists(value) && (0, _zanaUtil.getType)(value[_Symbol$iterator]) === _zanaUtil.types["function"];
 }
 
 /**
@@ -197,7 +187,7 @@ function isIterable(value) {
 */
 
 function isMap(value) {
-    return getType(value) === types.map;
+    return (0, _zanaUtil.getType)(value) === _zanaUtil.types.map;
 }
 
 /**
@@ -208,7 +198,7 @@ function isMap(value) {
 */
 
 function isNumber(value) {
-    return getType(value) === types.number;
+    return (0, _zanaUtil.getType)(value) === _zanaUtil.types.number;
 }
 
 /**
@@ -219,7 +209,7 @@ function isNumber(value) {
 */
 
 function isObject(value) {
-    return getType(value) === types.object;
+    return (0, _zanaUtil.getType)(value) === _zanaUtil.types.object;
 }
 
 /**
@@ -230,7 +220,7 @@ function isObject(value) {
 */
 
 function isSet(value) {
-    return getType(value) === types.set;
+    return (0, _zanaUtil.getType)(value) === _zanaUtil.types.set;
 }
 
 /**
@@ -241,7 +231,7 @@ function isSet(value) {
 */
 
 function isString(value) {
-    return getType(value) === types.string;
+    return (0, _zanaUtil.getType)(value) === _zanaUtil.types.string;
 }
 
 /**
@@ -252,7 +242,7 @@ function isString(value) {
 */
 
 function isRegExp(value) {
-    return getType(value) === types.regexp;
+    return (0, _zanaUtil.getType)(value) === _zanaUtil.types.regexp;
 }
 
 /**
@@ -263,10 +253,15 @@ function isRegExp(value) {
     @returns {boolean} True if the check passes, false if not.
 */
 
-function isType(value, type) {
-    return getType(value) === type;
+function isType(value, T) {
+    return (0, _zanaUtil.getType)(value) === T;
 }
 
+var isRegex = isRegExp;
+exports.isRegex = isRegex;
+var type = isType;
+
+exports.type = type;
 exports["default"] = {
     empty: empty,
     exists: exists,
@@ -285,5 +280,6 @@ exports["default"] = {
     isRegExp: isRegExp,
     isSet: isSet,
     isString: isString,
-    isType: isType
+    isType: isType,
+    type: isType
 };

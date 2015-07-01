@@ -1,4 +1,9 @@
-import check from '../dist/check.js';
+import check, {
+      isRegex
+    , isRegExp
+    , isType
+    , type
+} from '../dist/check.js';
 import assert from 'assert';
 let log = console.log.bind(console);
 
@@ -763,8 +768,10 @@ describe('Check', () => {
 
     describe('isRegex()', () => {
 
-        it('should be a reference to isRegExp', () => {
+        it('should be an alias for isRegExp()', () => {
             assert.strictEqual(check.isRegex, check.isRegExp);
+            assert.strictEqual(isRegex, isRegExp);
+            assert.strictEqual(isRegex, check.isRegex);
         });
 
     });
@@ -818,6 +825,15 @@ describe('Check', () => {
             assert.equal(false, check.isString(Symbol()));
         });
         
+    });
+
+    describe('type()', () => {
+
+        it('should be an alias for isType()', () => {
+            assert.strictEqual(check.type, check.isType);
+            assert.strictEqual(type, check.isType);
+            assert.strictEqual(type, isType);
+        });
     });
 
 });
