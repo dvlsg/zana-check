@@ -1,6 +1,6 @@
 "use strict";
 
-const check = require('../dist/check');
+const check = require('../');
 const { isRegex, isRegExp, isType, type } = check;
 const assert = require('assert');
 let log = console.log.bind(console);
