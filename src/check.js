@@ -9,7 +9,7 @@
 
 "use strict";
 
-import { getType, types } from 'zana-util';
+const { getType, types } = require('zana-util');
 
 /**
     Checks that the provided value is considered to be empty.
@@ -17,7 +17,7 @@ import { getType, types } from 'zana-util';
     @param {any} value The value to check for emptiness.
     @returns {boolean} True, if the check passes.
 */
-export function empty(value) {
+function empty(value) {
     if (!value)
         return true;
     if (exists(value.length) && value.length === 0) // covers strings, arrays, etc
@@ -43,7 +43,7 @@ export function empty(value) {
     @param {any} value The value to check for null or undefined values.
     @returns {boolean} True, if the check passes.
 */
-export function exists(value) {
+function exists(value) {
     return value != null;
 }
 
@@ -55,7 +55,7 @@ export function exists(value) {
     @param {any} arg2 The second argument for the instanceof operator.
     @returns {boolean} True, if arg1 is an instance of arg2.
 */
-export function instance(arg1, arg2) {
+function instance(arg1, arg2) {
     return arg1 instanceof arg2;
 }
 
@@ -67,11 +67,20 @@ export function instance(arg1, arg2) {
     @param {any} val2 The second value for which to check type.
     @returns {boolean} True, if the values are of the same type.
 */
-export function is(val1, val2) {
+function is(val1, val2) {
+    // if (val1.prototype && val2.prototype && val1.prototype === val2.prototype)
+    //     return true;
+    // return getType(val1) === getType(val2);
     // note that getType of (new Function()).prototype is [object Object].
     // do we actually want to do this, or suggest using instance Function, not is Function?
     let pro1 = (val1 && val1.prototype && !val1 instanceof Function) ? val1.prototype : val1;
     let pro2 = (val2 && val2.prototype) ? val2.prototype : val2;
+    if (
+           pro1 && pro1.constructor
+        && pro2 && pro2.constructor
+        && pro1.constructor === pro2.constructor
+    )
+        return true;
     return getType(pro1) === getType(pro2);
 }
 
@@ -81,7 +90,7 @@ export function is(val1, val2) {
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isArray(value) {
+function isArray(value) {
     // consider using Array.is()
     return getType(value) === types.array;
 }
@@ -92,7 +101,7 @@ export function isArray(value) {
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isBoolean(value) {
+function isBoolean(value) {
     return getType(value) === types.boolean;
 }
 
@@ -102,7 +111,7 @@ export function isBoolean(value) {
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isDate(value) {
+function isDate(value) {
     return getType(value) === types.date;
 }
 
@@ -113,7 +122,7 @@ export function isDate(value) {
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isError(value) {
+function isError(value) {
     return getType(value) === types.error || value instanceof Error;
 }
 
@@ -123,7 +132,7 @@ export function isError(value) {
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isFunction(value) {
+function isFunction(value) {
     return getType(value) === types.function;
 }
 
@@ -132,7 +141,7 @@ export function isFunction(value) {
 
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
-export function isGeneratorFunction(value) {
+function isGeneratorFunction(value) {
     return getType(value) === types.function && value.isGenerator();
 }
 */
@@ -143,9 +152,12 @@ export function isGeneratorFunction(value) {
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isIterable(value) {
+function isIterable(value) {
     // tbd if this is sufficient. check with both fns and generator fns
-    return exists(value) && getType(value[Symbol.iterator]) === types.function;
+    if (!exists(value))
+        return false;
+    let iteratorType = getType(value[Symbol.iterator]);
+    return iteratorType === types.function || iteratorType === types.generator;
 }
 
 /**
@@ -154,7 +166,7 @@ export function isIterable(value) {
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isMap(value) {
+function isMap(value) {
     return getType(value) === types.map;
 }
 
@@ -164,7 +176,7 @@ export function isMap(value) {
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isNumber(value) {
+function isNumber(value) {
     return getType(value) === types.number;
 }
 
@@ -174,7 +186,7 @@ export function isNumber(value) {
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isObject(value) {
+function isObject(value) {
     return getType(value) === types.object;
 }
 
@@ -184,7 +196,7 @@ export function isObject(value) {
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isSet(value) {
+function isSet(value) {
     return getType(value) === types.set;
 }
 
@@ -194,7 +206,7 @@ export function isSet(value) {
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isString(value) {
+function isString(value) {
     return getType(value) === types.string;
 }
 
@@ -204,7 +216,7 @@ export function isString(value) {
     @param {any} value The value on which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isRegExp(value) {
+function isRegExp(value) {
     return getType(value) === types.regexp;
 }
 
@@ -215,14 +227,11 @@ export function isRegExp(value) {
     @param {string} type The name of the type for which to check.
     @returns {boolean} True if the check passes, false if not.
 */
-export function isType(value, T) {
+function isType(value, T) {
     return getType(value) === T;
 }
 
-export var isRegex = isRegExp;
-export var type = isType;
-
-export default {
+module.exports = {
     empty,
     exists,
     instance,

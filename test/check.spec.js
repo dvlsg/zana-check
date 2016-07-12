@@ -1,10 +1,8 @@
-import check, {
-      isRegex
-    , isRegExp
-    , isType
-    , type
-} from '../dist/check.js';
-import assert from 'assert';
+"use strict";
+
+const check = require('../dist/check');
+const { isRegex, isRegExp, isType, type } = check;
+const assert = require('assert');
 let log = console.log.bind(console);
 
 describe('Check', () => {
@@ -551,7 +549,6 @@ describe('Check', () => {
         
         it('should pass for dates', () => {
             assert.ok(check.isDate(new Date()));
-            assert.ok(check.isDate(Date.prototype));
         });
 
         it('should fail for non dates', () => {
@@ -577,7 +574,6 @@ describe('Check', () => {
         it('should pass for errors', () => {
             class ExtendedError extends Error {};
             assert.ok(check.isError(new Error()));
-            assert.ok(check.isError(Error.prototype));
             assert.ok(check.isError(new ExtendedError()));
             assert.ok(check.isError(ExtendedError.prototype));
         });
@@ -745,7 +741,6 @@ describe('Check', () => {
             assert.ok(check.isRegExp(/.*/));
             assert.ok(check.isRegExp(new RegExp('.*')));
             assert.ok(check.isRegExp(RegExp('.*')));
-            assert.ok(check.isRegExp(RegExp.prototype));
         });
 
         it('should fail for non regular expressions', () => {
